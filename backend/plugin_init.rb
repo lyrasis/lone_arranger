@@ -4,6 +4,7 @@ require_relative '../lib/lone_arranger.rb'
 
 ArchivesSpaceService.loaded_hook do
   Repository.each do |repo|
+    # WARNING: we don't want to pullute the global repo
     next if repo.id == Repository.global_repo_id
 
     la_grp = Group.where(repo_id: repo.id).find do |g|
