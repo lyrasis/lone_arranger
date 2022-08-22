@@ -7,11 +7,12 @@ ArchivesSpaceService.loaded_hook do
     # WARNING: we don't want to pullute the global repo
     next if repo.id == Repository.global_repo_id
 
+    # Look for the Lone Arranger group
     la_grp = Group.where(repo_id: repo.id).find do |g|
       g.group_code == Group.LONE_ARRANGER_GROUP_CODE
     end
 
-    # Create or enforce Lone Arranger group permissions
+    # Create LA group or enforce Lone Arranger group permissions
     if la_grp.nil?
       Log.debug("Creating Lone Arranger group (#{repo.repo_code})")
       la_grp = repo.create_lone_arranger_group
@@ -33,11 +34,12 @@ ArchivesSpaceService.loaded_hook do
       users.concat(group.user.map { |member| member[:username] })
     end
 
+    # Reassign other group users to LA
     if users.any?
       Log.debug("Adding users to Lone Arranger group (#{repo.repo_code}): #{users.uniq.inspect}")
       Group.set_members(la_grp, OpenStruct.new(member_usernames: users.uniq))
 
-      # Lastly, after LA reassignment, clear out the other groups
+      # Lastly, after reassignment, clear out the other groups
       other_groups.each { |g| Group.set_members(g, OpenStruct.new(member_usernames: [])) }
     end
   end
