@@ -33,7 +33,32 @@ class Repository < Sequel::Model(:repository)
 
   def self.lone_arranger_group_permissions
     [
+      "cancel_importer_job",
+      "cancel_job",
+      "create_job",
+      "delete_archival_record",
+      "delete_assessment_record",
+      "delete_event_record",
+      "import_records",
+      "manage_agent_record",
+      "manage_assessment_attributes",
+      "manage_container_profile_record",
+      "manage_container_record",
+      "manage_location_profile_record",
+      "manage_rde_templates",
+      "manage_subject_record",
+      "manage_vocabulary_record",
+      "merge_agents_and_subjects",
+      "suppress_archival_record",
+      "update_accession_record",
+      "update_assessment_record",
+      "update_container_record",
+      "update_digital_object_record",
+      "update_event_record",
+      "update_location_record",
+      "update_resource_record",
       "view_repository",
+      "view_suppressed",
     ]
   end
 end
