@@ -15,3 +15,18 @@ The group permissions are defined here:
 **Warning: this plugin should never be used for any instance that
 does not want all users to be assigned to a single Lone Arranger
 group per repository.**
+
+To view LAG permissions:
+
+```sql
+SELECT
+  g.id,
+  g.group_code,
+  p.permission_code
+FROM group_permission gp
+JOIN `group` g ON gp.group_id = g.id
+JOIN permission p ON gp.permission_id = p.id
+WHERE g.group_code = 'lone-arranger'
+ORDER BY g.id, p.permission_code
+;
+```
