@@ -8,9 +8,7 @@ ArchivesSpaceService.loaded_hook do
     next if repo.id == Repository.global_repo_id
 
     # Look for the Lone Arranger group
-    la_grp = Group.where(repo_id: repo.id).find do |g|
-      g.group_code == Group.LONE_ARRANGER_GROUP_CODE
-    end
+    la_grp = repo.lone_arranger_group
 
     # Create LA group or enforce Lone Arranger group permissions
     if la_grp.nil?
