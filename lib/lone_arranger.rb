@@ -8,21 +8,31 @@ end
 
 class Repository < Sequel::Model(:repository)
   # after_save not used by ASpace
+  # We need this for new repositories created via the UI
   def after_save
     super
 
-    create_lone_arranger_group
+    create_lone_arranger_group if lone_arranger_group.nil?
   end
 
+  # Create lone arranger group for this repo
   def create_lone_arranger_group
-    RequestContext.open(repo_id: self.id) do
+    RequestContext.open(repo_id: id) do
       Group.create_from_json(
         JSONModel(:group).from_hash(Repository.lone_arranger_group),
-        repo_id: self.id
+        repo_id: id
       )
     end
   end
 
+  # Fetch lone arranger group for this repo (nil if not found)
+  def lone_arranger_group
+    Group.where(repo_id: id).find do |g|
+      g.group_code == Group.LONE_ARRANGER_GROUP_CODE
+    end
+  end
+
+  # Lone arranger group specification
   def self.lone_arranger_group
     {
       group_code: Group.LONE_ARRANGER_GROUP_CODE,
@@ -31,6 +41,7 @@ class Repository < Sequel::Model(:repository)
     }
   end
 
+  # Lone arranger group permissions
   def self.lone_arranger_group_permissions
     [
       "cancel_importer_job",
