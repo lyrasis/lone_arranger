@@ -62,6 +62,7 @@ class Repository < Sequel::Model(:repository)
       "manage_subject_record",
       "manage_vocabulary_record",
       "merge_agents_and_subjects",
+      "merge_archival_record",
       "suppress_archival_record",
       "update_accession_record",
       "update_assessment_record",
