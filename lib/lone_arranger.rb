@@ -53,7 +53,6 @@ class Repository < Sequel::Model(:repository)
       "delete_event_record",
       "import_records",
       "manage_agent_record",
-      "merge_archival_record",
       "manage_assessment_attributes",
       "manage_container_profile_record",
       "manage_container_record",
