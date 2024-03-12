@@ -56,6 +56,8 @@ class Repository < Sequel::Model(:repository)
       "manage_assessment_attributes",
       "manage_container_profile_record",
       "manage_container_record",
+      "manage_custom_report_templates",
+      "manage_enumeration_record",
       "manage_location_profile_record",
       "manage_rde_templates",
       "manage_repository",
@@ -71,6 +73,7 @@ class Repository < Sequel::Model(:repository)
       "update_digital_object_record",
       "update_event_record",
       "update_resource_record",
+      "view_agent_contact_record",
       "view_repository",
       "view_suppressed",
     ]
